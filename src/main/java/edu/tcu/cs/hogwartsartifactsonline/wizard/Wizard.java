@@ -48,8 +48,10 @@ public class Wizard implements Serializable {
     }
 
     public void addArtifact(Artifact artifact) {
-        artifact.setOwner(this);
-        this.artifacts.add(artifact);
+
+        // bidirectional relationship
+        artifact.setOwner(this);  // artifact to wizard
+        this.artifacts.add(artifact); // wizard to artifact
     }
 
     public Integer getNumberOfArtifacts() {
@@ -61,4 +63,12 @@ public class Wizard implements Serializable {
         this.artifacts = null;
     }
 
+    public void removeArtifact(Artifact artifactToBeAssigned) {
+        // Remove artifact owner
+
+        // artifact and wizard is bidrectional relationship so we need to break two rs
+        artifactToBeAssigned.setOwner(null); // break the link from artifact to wizard
+        this.artifacts.remove(artifactToBeAssigned); // break the link from wizard to artifact
+
+    }
 }
